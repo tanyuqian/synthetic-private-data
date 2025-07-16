@@ -9,7 +9,7 @@ ICML 2025
 
 ## Getting Started:
 * Synthetic data offers a promising path to train models while preserving data privacy. 
-* We propose Data Synthesis with ConTrollability and CLustering (CTCL), a novel framework for generating privacy-preserving synthetic data *without extensive prompt engineering or billion-scale LLM finetuning.* 
+* We propose CTCL (Data Synthesis with ConTrollability and CLustering), a novel framework for generating privacy-preserving synthetic data *without extensive prompt engineering or billion-scale LLM finetuning.* 
 
 
 ## Pretrained CTCL-Topic and CTCL-Generator
