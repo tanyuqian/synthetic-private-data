@@ -1,11 +1,10 @@
 # Synthesizing Privacy-Preserving Text Data
 
 
-This repo is for the following paper:
+This repo contains preliminary code for the following paper:
 
-[Synthesizing Privacy-Preserving Text Data via Finetuning without Finetuning Billion-Scale LLMs](https://arxiv.org/abs/2503.12347) \
-Bowen Tan, Zheng Xu, Eric Xing, Zhiting Hu, Shanshan Wu \
-ICML 2025
+Synthesizing Privacy-Preserving Text Data via Finetuning without Finetuning Billion-Scale LLMs \
+[https://arxiv.org/abs/2503.12347](https://arxiv.org/abs/2503.12347) 
 
 ## Getting Started:
 * Synthetic data offers a promising path to train models while preserving data privacy. 
@@ -100,4 +99,46 @@ if __name__ == '__main__':
     fire.Fire(main)
 ```
 
-*More code (for pretraining, DP fine-tuning, evaluation, etc.) coming soon...*
+
+## DP Finetuning Example
+
+### Python Env Installation
+```
+conda create --name ctcl python=3.12
+pip install redco bertopic transformers datasets gdown fire dp_accounting nltk sentence_transformers mauve-text
+pip install --upgrade "jax[cuda12]"  # or "jax[cuda13]" 
+pip install --upgrade torch torchvision --index-url https://download.pytorch.org/whl/cpu
+```
+
+### Download Data
+We use the same PubMed data as in [AUG-PE (Xie et al.)](https://arxiv.org/abs/2403.01749), provided in their repo [https://github.com/AI-secure/aug-pe](https://github.com/AI-secure/aug-pe).
+```
+mkdir pubmed
+cd pubmed
+gdown 12-zV93MQNPvM_ORUoahZ2n4odkkOXD-r
+wget https://raw.githubusercontent.com/AI-secure/aug-pe/refs/heads/main/data/pubmed/test.csv
+```
+
+### Download CTCL-Generator & CTCL-Topic
+```
+gdown 1sbda6ROyMewThuoDA3bxP71ucihcf7qJ
+unzip ctcl_pretrained.zip
+```
+
+### Pre-process Data
+Annotate topics using CTCL-Topic.
+```
+python get_data_topics.py
+```
+
+### Run DP Finetuning
+```
+python finetune.py --epsilon 4.0 --per_device_batch_size 16
+```
+
+### Evaluation
+Evaluate next-word prediction accuracy with `bert-mini` as the downstream model:
+```
+python evaluate_next_word_prediction.py --syn_data_file workdir/outputs_eps-4.jsonl
+```
+*(Result numbers may vary depending on hardware differences such as GPUs/TPUs.)*
