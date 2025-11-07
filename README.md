@@ -117,6 +117,7 @@ mkdir pubmed
 cd pubmed
 gdown 12-zV93MQNPvM_ORUoahZ2n4odkkOXD-r
 wget https://raw.githubusercontent.com/AI-secure/aug-pe/refs/heads/main/data/pubmed/test.csv
+cd ..
 ```
 
 ### Download CTCL-Generator & CTCL-Topic
@@ -141,4 +142,4 @@ Evaluate next-word prediction accuracy with `bert-mini` as the downstream model:
 ```
 python evaluate_next_word_prediction.py --syn_data_file workdir/outputs_eps-4.jsonl
 ```
-*(Result numbers may vary depending on hardware differences such as GPUs/TPUs.)*
+*Result numbers may vary depending on hardware differences such as GPUs/TPUs.*
